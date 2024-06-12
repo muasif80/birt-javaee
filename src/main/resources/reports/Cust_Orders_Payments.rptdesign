@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.15.0.v202403260939</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">120</property>
+    <text-property name="title">master_child_report_on_single_page</text-property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="ClassicModelsDS" id="4">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.eclipse.birt.report.data.oda.sampledb.Driver</property>
+            <property name="odaURL">jdbc:classicmodels:sampledb</property>
+            <property name="odaUser">ClassicModels</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Customers" id="5">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">CUSTOMERNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CUSTOMERNAME</text-property>
+                    <text-property name="heading">CUSTOMERNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CUSTOMERNUMBER</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CUSTOMERNUMBER</text-property>
+                    <text-property name="heading">CUSTOMERNUMBER</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">CUSTOMERNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">CUSTOMERNUMBER</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ClassicModelsDS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">CUSTOMERNAME</property>
+                    <property name="nativeName">CUSTOMERNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">CUSTOMERNUMBER</property>
+                    <property name="nativeName">CUSTOMERNUMBER</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select Customers.customerName, Customers.customerNumber
+from Customers
+WHERE 
+  EXISTS 
+  (SELECT Orders.customerNumber
+  FROM Orders 
+  WHERE Customers.customerNumber = 
+  Orders.customerNumber)
+  OR
+  EXISTS 
+  (SELECT Payments.customerNumber
+  FROM Payments 
+  WHERE Customers.customerNumber = 
+  Payments.customerNumber)
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOMERNAME</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CUSTOMERNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOMERNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOMERNUMBER</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CUSTOMERNUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOMERNUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Orders" id="6">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">ORDERNUMBER</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">ORDERNUMBER</text-property>
+                    <text-property name="heading">ORDERNUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ORDERDATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ORDERDATE</text-property>
+                    <text-property name="heading">ORDERDATE</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">CustID</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">103</expression>
+                    <property name="isOptional">true</property>
+                    <property name="allowNull">true</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">ORDERNUMBER</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ORDERDATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ClassicModelsDS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">ORDERNUMBER</property>
+                    <property name="nativeName">ORDERNUMBER</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">ORDERDATE</property>
+                    <property name="nativeName">ORDERDATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT Orders.orderNumber,
+Orders.orderDate
+FROM Orders
+WHERE Orders.customerNumber = ?
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+          <design:precision>10</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Nullable</design:nullability>
+        </design:attributes>
+        <design:inputAttributes>
+          <design:elementAttributes>
+            <design:optional>true</design:optional>
+          </design:elementAttributes>
+        </design:inputAttributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ORDERNUMBER</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ORDERNUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ORDERNUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ORDERDATE</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ORDERDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ORDERDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Payments" id="7">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">PAYMENTDATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYMENTDATE</text-property>
+                    <text-property name="heading">PAYMENTDATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">AMOUNT</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">AMOUNT</text-property>
+                    <text-property name="heading">AMOUNT</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">CustID</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">103</expression>
+                    <property name="isOptional">true</property>
+                    <property name="allowNull">true</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">PAYMENTDATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">AMOUNT</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ClassicModelsDS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">PAYMENTDATE</property>
+                    <property name="nativeName">PAYMENTDATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">AMOUNT</property>
+                    <property name="nativeName">AMOUNT</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT Payments.paymentDate,
+Payments.amount
+FROM Payments
+WHERE Payments.customerNumber = ?
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+          <design:precision>10</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Nullable</design:nullability>
+        </design:attributes>
+        <design:inputAttributes>
+          <design:elementAttributes>
+            <design:optional>true</design:optional>
+          </design:elementAttributes>
+        </design:inputAttributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PAYMENTDATE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PAYMENTDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PAYMENTDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AMOUNT</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>15</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AMOUNT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AMOUNT</design:label>
+            <design:formattingHints>
+              <design:displaySize>24</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <list id="8">
+            <property name="dataSet">Customers</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">CUSTOMERNAME</property>
+                    <text-property name="displayName">CUSTOMERNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CUSTOMERNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CUSTOMERNUMBER</property>
+                    <text-property name="displayName">CUSTOMERNUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CUSTOMERNUMBER"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <list-property name="sort">
+                <structure>
+                    <expression name="key" type="javascript">row["CUSTOMERNAME"]</expression>
+                    <property name="direction">asc</property>
+                    <property name="strength">-1</property>
+                </structure>
+            </list-property>
+            <detail>
+                <data id="9">
+                    <property name="resultSetColumn">CUSTOMERNAME</property>
+                </data>
+                <grid id="60">
+                    <column id="61"/>
+                    <column id="62"/>
+                    <row id="63">
+                        <cell id="64">
+                            <table id="22">
+                                <property name="dataSet">Orders</property>
+                                <list-property name="paramBindings">
+                                    <structure>
+                                        <property name="paramName">CustID</property>
+                                        <simple-property-list name="expression">
+                                            <value type="javascript">row["CUSTOMERNUMBER"]</value>
+                                        </simple-property-list>
+                                    </structure>
+                                </list-property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">ORDERNUMBER</property>
+                                        <text-property name="displayName">ORDERNUMBER</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["ORDERNUMBER"]</expression>
+                                        <property name="dataType">integer</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">ORDERDATE</property>
+                                        <text-property name="displayName">ORDERDATE</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["ORDERDATE"]</expression>
+                                        <property name="dataType">date</property>
+                                    </structure>
+                                </list-property>
+                                <list-property name="sort">
+                                    <structure>
+                                        <expression name="key" type="javascript">row["ORDERNUMBER"]</expression>
+                                        <property name="direction">asc</property>
+                                        <property name="strength">-1</property>
+                                    </structure>
+                                </list-property>
+                                <column id="36"/>
+                                <column id="37"/>
+                                <header>
+                                    <row id="23">
+                                        <cell id="24">
+                                            <label id="25">
+                                                <text-property name="text">ORDERNUMBER</text-property>
+                                            </label>
+                                        </cell>
+                                        <cell id="26">
+                                            <label id="27">
+                                                <text-property name="text">ORDERDATE</text-property>
+                                            </label>
+                                        </cell>
+                                    </row>
+                                </header>
+                                <detail>
+                                    <row id="28">
+                                        <cell id="29">
+                                            <data id="30">
+                                                <property name="resultSetColumn">ORDERNUMBER</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="31">
+                                            <data id="32">
+                                                <property name="resultSetColumn">ORDERDATE</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </detail>
+                                <footer>
+                                    <row id="33">
+                                        <cell id="34"/>
+                                        <cell id="35"/>
+                                    </row>
+                                </footer>
+                            </table>
+                        </cell>
+                        <cell id="65">
+                            <table id="38">
+                                <property name="dataSet">Payments</property>
+                                <list-property name="paramBindings">
+                                    <structure>
+                                        <property name="paramName">CustID</property>
+                                        <simple-property-list name="expression">
+                                            <value type="javascript">row["CUSTOMERNUMBER"]</value>
+                                        </simple-property-list>
+                                    </structure>
+                                </list-property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">PAYMENTDATE</property>
+                                        <text-property name="displayName">PAYMENTDATE</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["PAYMENTDATE"]</expression>
+                                        <property name="dataType">date</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">AMOUNT</property>
+                                        <text-property name="displayName">AMOUNT</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["AMOUNT"]</expression>
+                                        <property name="dataType">float</property>
+                                    </structure>
+                                </list-property>
+                                <list-property name="sort">
+                                    <structure>
+                                        <expression name="key" type="javascript">row["PAYMENTDATE"]</expression>
+                                        <property name="direction">asc</property>
+                                        <property name="strength">-1</property>
+                                    </structure>
+                                </list-property>
+                                <column id="52"/>
+                                <column id="53"/>
+                                <header>
+                                    <row id="39">
+                                        <cell id="40">
+                                            <label id="41">
+                                                <text-property name="text">PAYMENTDATE</text-property>
+                                            </label>
+                                        </cell>
+                                        <cell id="42">
+                                            <label id="43">
+                                                <text-property name="text">AMOUNT</text-property>
+                                            </label>
+                                        </cell>
+                                    </row>
+                                </header>
+                                <detail>
+                                    <row id="44">
+                                        <cell id="45">
+                                            <data id="46">
+                                                <property name="resultSetColumn">PAYMENTDATE</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="47">
+                                            <data id="48">
+                                                <property name="resultSetColumn">AMOUNT</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </detail>
+                                <footer>
+                                    <row id="49">
+                                        <cell id="50"/>
+                                        <cell id="51"/>
+                                    </row>
+                                </footer>
+                            </table>
+                        </cell>
+                    </row>
+                    <row id="66">
+                        <cell id="67"/>
+                        <cell id="68"/>
+                    </row>
+                </grid>
+            </detail>
+        </list>
+    </body>
+</report>
